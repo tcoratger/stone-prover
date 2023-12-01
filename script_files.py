@@ -38,7 +38,7 @@ def generate_library_commands(directory):
                     file_extension = file.endswith(".cc")
                     file_name = file.split(".")[0]  # Removing file extension
                     log_file.write(
-                        f'addLibrary(b, "{file_name}", "{relative_path}/{file}", {str(file_extension).lower()});\n'
+                        f'addLibrary(b, "{file_name}", "{relative_path}/{file}", {str(file_extension).lower()}, target, optimize, cpu_air_prover);\n'
                     )
 
 
