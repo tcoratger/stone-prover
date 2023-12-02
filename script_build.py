@@ -72,9 +72,6 @@ def process_subdirectories(file_path, output_file):
                 os.path.basename(os.path.dirname(os.path.dirname(file_path)))
             )
             for match in matches:
-                # output_file.write(
-                #     f"{parent_folder}_{folder_name}.linkLibrary({folder_name}_{clean_folder_name(match)});\n"
-                # )
                 if "/" in match:
                     parts = match.split("/")
                     output_file.write(
@@ -85,15 +82,6 @@ def process_subdirectories(file_path, output_file):
                         f"{parent_folder}_{folder_name}.linkLibrary({folder_name}_{clean_folder_name(match)});\n"
                     )
             output_file.write("\n")
-
-
-# def process_project_directory(directory_path, output_file):
-#     for root, dirs, files in os.walk(directory_path):
-#         for file in files:
-#             if file == "CMakeLists.txt":
-#                 file_path = os.path.join(root, file)
-#                 process_cmake_file(file_path, output_file)
-#                 process_subdirectories(file_path, output_file)
 
 
 def process_project_directory(directory_path, output_file):
@@ -109,38 +97,6 @@ def process_project_directory(directory_path, output_file):
         file_path = os.path.join(dir_path, "CMakeLists.txt")
         process_cmake_file(file_path, output_file)
         process_subdirectories(file_path, output_file)
-
-
-# def insert_output_into_build_zig(output_file_path, build_zig_path):
-#     with open(output_file_path, "r") as output_file:
-#         output_content = output_file.read()
-
-#     with open(build_zig_path, "r") as build_zig:
-#         build_content = build_zig.read()
-
-#     # Insérer le contenu de output.txt entre "BEGIN" et "END" dans build.zig
-#     begin_marker = "// BEGIN\n"
-#     end_marker = "// END\n"
-#     begin_index = build_content.find(begin_marker) + len(begin_marker)
-#     end_index = build_content.find(end_marker)
-
-#     updated_build_content = (
-#         build_content[:begin_index]
-#         + output_content.strip()
-#         + "\n\n"
-#         + build_content[end_index:]  # Ajout du contenu de output.txt
-#     )
-
-#     # Écriture du contenu mis à jour dans le fichier build.zig
-#     with open(build_zig_path, "w") as build_zig:
-#         build_zig.write(updated_build_content)
-
-
-# def main():
-#     output_file_path = "output.txt"
-#     with open(output_file_path, "w") as output_file:
-#         project_directory = os.getcwd()
-#         process_project_directory(project_directory, output_file)
 
 
 def main():
@@ -177,10 +133,6 @@ def main():
     # Écriture du contenu mis à jour dans le fichier build.zig
     with open(build_zig_path, "w") as build_zig:
         build_zig.write(updated_build_content)
-
-
-if __name__ == "__main__":
-    main()
 
 
 if __name__ == "__main__":
