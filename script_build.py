@@ -3,22 +3,43 @@ import re
 
 
 def clean_folder_name(folder_name):
+    """
+    Clean the folder name by replacing dashes with underscores.
+
+    Args:
+        folder_name (str): The folder name to be cleaned.
+
+    Returns:
+        str: The cleaned folder name.
+    """
     cleaned_name = folder_name.replace("-", "_")
     return cleaned_name
 
 
 def process_cmake_file(file_path, output_file):
+    """
+    Process the content of a CMakeLists.txt file.
+
+    Args:
+        file_path (str): The path to the CMakeLists.txt file.
+        output_file (_io.TextIOWrapper): The output file to write to.
+    """
+    # Reading the content of the CMakeLists.txt file
     with open(file_path, "r") as file:
         content = file.read()
+
+        # Find 'add_executable' and 'add_library' blocks
         matches_exec = re.findall(r"add_executable\((.*?)\)", content)
         matches_lib = re.findall(r"add_library\((.*?)\)", content)
         matches = matches_exec + matches_lib
 
+        # Extract folder names
         folder_name = clean_folder_name(os.path.basename(os.path.dirname(file_path)))
         parent_folder = clean_folder_name(
             os.path.basename(os.path.dirname(os.path.dirname(file_path)))
         )
 
+        # Write static library declaration to output_file
         output_file.write(
             f"const {parent_folder}_{folder_name} = b.addStaticLibrary(.{{\n"
         )
@@ -27,24 +48,29 @@ def process_cmake_file(file_path, output_file):
         output_file.write("    .optimize = optimize,\n")
         output_file.write("});\n")
 
+        # Process file matches
         if matches:
+            # Check for .cc or .cpp files
             has_cpp_files = any(
                 re.search(r"\S+\.cc|\S+\.cpp", match) for match in matches
             )
+
+            # Link based on presence of .cc or .cpp files
             if has_cpp_files:
                 output_file.write(f"{parent_folder}_{folder_name}.linkLibCpp();\n")
             else:
                 output_file.write(f"{parent_folder}_{folder_name}.linkLibC();\n")
 
+            # Process files found in matches
             has_files = any(
                 re.search(r"\S+\.cc|\S+\.cpp|\S+\.c|\S+\.s", match) for match in matches
             )
-
             if has_files:
                 output_file.write(
                     f"{parent_folder}_{folder_name}.addCSourceFiles(.{{.files = &[_][]const u8{{"
                 )
 
+                # Write file paths to output_file
                 for match in matches:
                     files = re.findall(r"\S+\.cc|\S+\.cpp|\S+\.c|\S+\.s", match)
 
@@ -58,11 +84,18 @@ def process_cmake_file(file_path, output_file):
 
 
 def process_subdirectories(file_path, output_file):
+    """
+    Process subdirectories mentioned in the CMakeLists.txt file.
+
+    Args:
+        file_path (str): The path to the CMakeLists.txt file.
+        output_file (_io.TextIOWrapper): The output file to write to.
+    """
     with open(file_path, "r") as file:
         content = file.read()
         matches = re.findall(
             r"add_subdirectory\((.*?)\)", content
-        )  # Trouve les blocs add_subdirectory
+        )  # Find 'add_subdirectory' blocks
 
         if matches:
             folder_name = clean_folder_name(
@@ -85,13 +118,20 @@ def process_subdirectories(file_path, output_file):
 
 
 def process_project_directory(directory_path, output_file):
+    """
+    Process the entire project directory.
+
+    Args:
+        directory_path (str): The path to the project directory.
+        output_file (_io.TextIOWrapper): The output file to write to.
+    """
     directories = []
     for root, dirs, files in os.walk(directory_path):
         for file in files:
             if file == "CMakeLists.txt":
                 directories.append(root)
 
-    directories.reverse()  # Inverser l'ordre
+    directories.reverse()  # Reverse the order
 
     for dir_path in directories:
         file_path = os.path.join(dir_path, "CMakeLists.txt")
@@ -100,37 +140,40 @@ def process_project_directory(directory_path, output_file):
 
 
 def main():
+    """
+    Main function to generate output.txt and update build.zig.
+    """
     output_file_path = "output.txt"
     build_zig_path = "build.zig"
     project_directory = os.getcwd()
 
-    # Processus habituel pour générer output.txt
+    # Generate output.txt
     with open(output_file_path, "w") as output_file:
         process_project_directory(project_directory, output_file)
 
-    # Lecture du contenu de output.txt
+    # Read output.txt content
     with open(output_file_path, "r") as output_file:
         output_content = output_file.read()
 
-    # Lecture du contenu de build.zig
+    # Read build.zig content
     with open(build_zig_path, "r") as build_zig:
         build_content = build_zig.read()
 
-    # Trouver les positions des marqueurs "BEGIN" et "END"
+    # Find "BEGIN" and "END" markers
     begin_marker = "// BEGIN\n"
     end_marker = "// END\n"
     begin_index = build_content.find(begin_marker) + len(begin_marker)
     end_index = build_content.find(end_marker)
 
-    # Insérer le contenu de output.txt entre les balises "BEGIN" et "END" dans build.zig
+    # Insert output.txt content between "BEGIN" and "END" markers in build.zig
     updated_build_content = (
         build_content[:begin_index]
         + output_content.strip()
         + "\n\n"
-        + build_content[end_index:]  # Ajout du contenu de output.txt
+        + build_content[end_index:]
     )
 
-    # Écriture du contenu mis à jour dans le fichier build.zig
+    # Write updated content to build.zig
     with open(build_zig_path, "w") as build_zig:
         build_zig.write(updated_build_content)
 
