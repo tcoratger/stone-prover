@@ -41,6 +41,7 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_prover.linkLibCpp();
 
     // BEGIN
+
     const algebra_lde = b.addStaticLibrary(.{
         .name = "algebra_lde",
         .target = target,
@@ -452,7 +453,7 @@ pub fn build(b: *std.build.Builder) void {
 
     starkware_air.linkLibrary(air_boundary);
     starkware_air.linkLibrary(air_boundary_constraints);
-    starkware_air.linkLibrary(cpu_board);
+    starkware_air.linkLibrary(air_cpu_board);
     starkware_air.linkLibrary(air_components);
     starkware_air.linkLibrary(air_degree_three_example);
     starkware_air.linkLibrary(air_fibonacci);
@@ -601,7 +602,7 @@ pub fn build(b: *std.build.Builder) void {
     });
     src_starkware.linkLibrary(starkware_air);
     src_starkware.linkLibrary(starkware_algebra);
-    src_starkware.linkLibrary(vm_cpp);
+    src_starkware.linkLibrary(starkware_cairo_lang_vm_cpp);
     src_starkware.linkLibrary(starkware_channel);
     src_starkware.linkLibrary(starkware_commitment_scheme);
     src_starkware.linkLibrary(starkware_composition_polynomial);
