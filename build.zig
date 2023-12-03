@@ -1,34 +1,5 @@
 const std = @import("std");
 
-fn addLibrary(
-    b: *std.build.Builder,
-    name: []const u8,
-    path: []const u8,
-    flag_cc: bool,
-    target: std.zig.CrossTarget,
-    optimize: std.builtin.OptimizeMode,
-    cpu_air_prover: *std.build.Step.Compile,
-) void {
-    const library = b.addStaticLibrary(.{
-        .name = name,
-        .target = target,
-        .optimize = optimize,
-    });
-    if (flag_cc) {
-        library.linkLibCpp();
-    } else {
-        library.linkLibC();
-    }
-
-    if (!std.mem.eql(u8, path, ""))
-        library.addCSourceFile(.{
-            .file = .{ .path = path },
-            .flags = &.{"-I./"},
-        });
-
-    cpu_air_prover.linkLibrary(library);
-}
-
 pub fn build(b: *std.build.Builder) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
