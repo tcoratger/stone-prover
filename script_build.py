@@ -1,5 +1,6 @@
 import os
 import re
+import subprocess
 
 
 def clean_folder_name(folder_name):
@@ -176,6 +177,9 @@ def main():
     # Write updated content to build.zig
     with open(build_zig_path, "w") as build_zig:
         build_zig.write(updated_build_content)
+
+    # Run zig fmt command to format build.zig
+    subprocess.run(["zig", "fmt", "build.zig"], check=True)
 
 
 if __name__ == "__main__":
