@@ -7,7 +7,14 @@ pub fn build(b: *std.build.Builder) void {
     var cpu_air_prover = b.addExecutable(.{ .name = "cpu_air_prover", .target = target, .optimize = optimize });
     cpu_air_prover.addCSourceFile(.{
         .file = .{ .path = "src/starkware/main/cpu/cpu_air_prover_main.cc" },
-        .flags = &.{"-I./"},
+        .flags = &.{
+            "-I./src",
+            "-I/tmp/benchmark/include",
+            "-I/tmp/gflags/include",
+            "-I/tmp/glog/src",
+            "-I/tmp/glog",
+            "-I/tmp/googletest/googletest/include",
+        },
     });
     cpu_air_prover.linkLibCpp();
 
