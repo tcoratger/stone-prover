@@ -8,6 +8,10 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_prover.addCSourceFile(.{
         .file = .{ .path = "src/starkware/main/cpu/cpu_air_prover_main.cc" },
         .flags = &.{
+            "-std=c++17",
+            "-Wall",
+            "-Wextra",
+            "-fPIC",
             "-I./src",
             "-I/tmp/benchmark/include",
             "-I/tmp/gflags/include",
@@ -24,6 +28,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(algebra_lde);
     algebra_lde.linkLibCpp();
     algebra_lde.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/lde/lde_test.cc",
@@ -37,6 +42,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(algebra_fields);
     algebra_fields.linkLibCpp();
     algebra_fields.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/fields/test_field_element_test.cc",
@@ -56,6 +62,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(algebra_fft);
     algebra_fft.linkLibCpp();
     algebra_fft.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/fft/fft_test.cc",
@@ -67,6 +74,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(algebra_utils);
     algebra_utils.linkLibCpp();
     algebra_utils.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/utils/invoke_template_version_test.cc",
@@ -79,6 +87,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(algebra_domains);
     algebra_domains.linkLibCpp();
     algebra_domains.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/domains/multiplicative_group_test.cc",
@@ -92,6 +101,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(algebra_elliptic_curve);
     algebra_elliptic_curve.linkLibCpp();
     algebra_elliptic_curve.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/elliptic_curve/elliptic_curve_test.cc",
@@ -102,6 +112,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(algebra_polymorphic);
     algebra_polymorphic.linkLibCpp();
     algebra_polymorphic.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/polymorphic/field_element_test.cc",
@@ -119,6 +130,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_algebra);
     starkware_algebra.linkLibCpp();
     starkware_algebra.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/field_operations_test.cc",
@@ -142,6 +154,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_stark);
     starkware_stark.linkLibCpp();
     starkware_stark.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/stark/committed_trace_test.cc",
@@ -161,6 +174,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(main_cpu);
     main_cpu.linkLibCpp();
     main_cpu.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/main/cpu/cpu_air_prover_main.cc",
@@ -172,6 +186,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_main);
     starkware_main.linkLibCpp();
     starkware_main.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/main/verifier_main_helper_impl.cc",
@@ -187,6 +202,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(crypt_tools_hash_context);
     crypt_tools_hash_context.linkLibCpp();
     crypt_tools_hash_context.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/crypt_tools/hash_context/pedersen_hash_context.cc",
@@ -197,6 +213,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_crypt_tools);
     starkware_crypt_tools.linkLibCpp();
     starkware_crypt_tools.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/crypt_tools/utils_test.cc",
@@ -214,6 +231,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_gtest);
     starkware_gtest.linkLibCpp();
     starkware_gtest.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/gtest/gtest_main.cc",
@@ -224,6 +242,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(commitment_scheme_merkle);
     commitment_scheme_merkle.linkLibCpp();
     commitment_scheme_merkle.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/commitment_scheme/merkle/merkle_test.cc",
@@ -236,6 +255,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_commitment_scheme);
     starkware_commitment_scheme.linkLibCpp();
     starkware_commitment_scheme.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/commitment_scheme/table_prover_impl_test.cc",
@@ -260,6 +280,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_proof_system);
     starkware_proof_system.linkLibCpp();
     starkware_proof_system.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/proof_system/proof_system_test.cc",
@@ -271,6 +292,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_channel);
     starkware_channel.linkLibCpp();
     starkware_channel.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/channel/channel_test.cc",
@@ -291,6 +313,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_error_handling);
     starkware_error_handling.linkLibCpp();
     starkware_error_handling.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/error_handling/error_handling_test.cc",
@@ -303,6 +326,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_math);
     starkware_math.linkLibCpp();
     starkware_math.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/math/math_test.cc",
@@ -313,6 +337,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(air_boundary_constraints);
     air_boundary_constraints.linkLibCpp();
     air_boundary_constraints.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/boundary_constraints/boundary_periodic_column_test.cc",
@@ -323,6 +348,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(air_fibonacci);
     air_fibonacci.linkLibCpp();
     air_fibonacci.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/fibonacci/fibonacci_air_test.cc",
@@ -333,6 +359,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(components_perm_range_check);
     components_perm_range_check.linkLibCpp();
     components_perm_range_check.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/components/perm_range_check/range_check_cell_test.cc",
@@ -343,6 +370,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(components_diluted_check);
     components_diluted_check.linkLibCpp();
     components_diluted_check.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/components/diluted_check/diluted_check_cell_test.cc",
@@ -354,6 +382,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(components_memory);
     components_memory.linkLibCpp();
     components_memory.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/components/memory/memory_cell_test.cc",
@@ -364,6 +393,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(components_permutation);
     components_permutation.linkLibCpp();
     components_permutation.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/components/permutation/permutation_dummy_air_test.cc",
@@ -374,6 +404,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(air_components);
     air_components.linkLibCpp();
     air_components.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/components/trace_generation_context_test.cc",
@@ -390,6 +421,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(air_degree_three_example);
     air_degree_three_example.linkLibCpp();
     air_degree_three_example.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/degree_three_example/degree_three_example_air_test.cc",
@@ -400,6 +432,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(air_boundary);
     air_boundary.linkLibCpp();
     air_boundary.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/boundary/boundary_air_test.cc",
@@ -410,6 +443,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(cpu_board);
     cpu_board.linkLibCpp();
     cpu_board.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/cpu/board/cpu_air_test.cc",
@@ -420,6 +454,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_air);
     starkware_air.linkLibCpp();
     starkware_air.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/trace_test.cc",
@@ -440,6 +475,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(vm_cpp);
     vm_cpp.linkLibCpp();
     vm_cpp.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/cairo/lang/vm/cpp/decoder_test.cc",
@@ -452,6 +488,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_utils);
     starkware_utils.linkLibCpp();
     starkware_utils.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/utils/stats_test.cc",
@@ -477,6 +514,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(statement_fibonacci);
     statement_fibonacci.linkLibCpp();
     statement_fibonacci.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/statement/fibonacci/fibonacci_statement_test.cc",
@@ -487,6 +525,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(statement_cpu);
     statement_cpu.linkLibCpp();
     statement_cpu.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/statement/cpu/cpu_air_statement.cc",
@@ -497,6 +536,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_statement);
     starkware_statement.linkLibrary(statement_cpu);
     starkware_statement.linkLibrary(statement_fibonacci);
 
@@ -505,6 +545,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_stl_utils);
     starkware_stl_utils.linkLibCpp();
     starkware_stl_utils.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/stl_utils/containers_test.cc",
@@ -516,6 +557,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_randomness);
     starkware_randomness.linkLibCpp();
     starkware_randomness.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/randomness/prng_test.cc",
@@ -529,6 +571,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_fft_utils);
     starkware_fft_utils.linkLibCpp();
     starkware_fft_utils.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/fft_utils/fft_domain_test.cc",
@@ -540,6 +583,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_fri);
     starkware_fri.linkLibCpp();
     starkware_fri.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/fri/fri_test.cc",
@@ -563,6 +607,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(starkware_composition_polynomial);
     starkware_composition_polynomial.linkLibCpp();
     starkware_composition_polynomial.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/composition_polynomial/periodic_column_test.cc",
@@ -577,6 +622,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(src_starkware);
     src_starkware.linkLibrary(starkware_air);
     src_starkware.linkLibrary(starkware_algebra);
     src_starkware.linkLibrary(vm_cpp);
@@ -602,6 +648,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(XKCP_KeccakP_1600_OptimizedAVX2);
     XKCP_KeccakP_1600_OptimizedAVX2.linkLibC();
     XKCP_KeccakP_1600_OptimizedAVX2.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/third_party/XKCP/KeccakP-1600-OptimizedAVX2/KeccakP-1600-AVX2.s",
@@ -612,6 +659,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(XKCP_CompactFIPS202);
     XKCP_CompactFIPS202.linkLibC();
     XKCP_CompactFIPS202.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/third_party/XKCP/CompactFIPS202/Keccak-readable-and-compact.c",
@@ -622,6 +670,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(third_party_XKCP);
     third_party_XKCP.linkLibrary(XKCP_CompactFIPS202);
     third_party_XKCP.linkLibrary(XKCP_KeccakP_1600_OptimizedAVX2);
 
@@ -630,6 +679,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(third_party_jsoncpp);
     third_party_jsoncpp.linkLibCpp();
     third_party_jsoncpp.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/third_party/jsoncpp/jsoncpp.cpp",
@@ -640,6 +690,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(third_party_blake2);
     third_party_blake2.linkLibC();
     third_party_blake2.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/third_party/blake2/blake2s.c",
@@ -650,6 +701,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(src_third_party);
     src_third_party.linkLibC();
     src_third_party.linkLibrary(third_party_jsoncpp);
     src_third_party.linkLibrary(third_party_blake2);
@@ -660,6 +712,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(stone_prover_src);
     stone_prover_src.linkLibC();
     stone_prover_src.linkLibrary(src_starkware);
     stone_prover_src.linkLibrary(src_third_party);
@@ -669,6 +722,7 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    cpu_air_prover.linkLibrary(zkp_stone_prover);
     zkp_stone_prover.linkLibrary(stone_prover_src);
 
     // END
@@ -676,6 +730,9 @@ pub fn build(b: *std.build.Builder) void {
     // addLibrary(b, "cpu_air_prover_main", "starkware/main/cpu/cpu_air_prover_main.cc", true, target, optimize, cpu_air_prover);
     // addLibrary(b, "cpu_air_verifier_main", "starkware/main/cpu/cpu_air_verifier_main.cc", true, target, optimize);
 
-    const install_exe = b.addInstallArtifact(cpu_air_prover, .{});
+    const install_exe = b.addInstallArtifact(
+        cpu_air_prover,
+        .{},
+    );
     b.getInstallStep().dependOn(&install_exe.step);
 }

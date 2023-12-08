@@ -48,6 +48,9 @@ def process_cmake_file(file_path, output_file):
         output_file.write("    .target = target,\n")
         output_file.write("    .optimize = optimize,\n")
         output_file.write("});\n")
+        output_file.write(
+            f"cpu_air_prover.linkLibrary({parent_folder}_{folder_name});\n"
+        )
 
         # Process file matches
         if matches:
