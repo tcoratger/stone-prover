@@ -51,6 +51,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -87,6 +88,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -115,6 +117,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -144,6 +147,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -174,6 +178,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -201,6 +206,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -235,6 +241,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -267,6 +274,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -311,6 +319,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -339,6 +348,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -369,6 +379,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -398,6 +409,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -430,6 +442,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -459,6 +472,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -488,6 +502,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -527,6 +542,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -557,6 +573,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -594,6 +611,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -623,6 +641,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -650,6 +669,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -677,6 +697,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -704,6 +725,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -731,6 +753,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -759,6 +782,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -786,6 +810,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -813,6 +838,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -841,6 +867,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -873,6 +900,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -900,6 +928,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -927,6 +956,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -957,6 +987,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -993,6 +1024,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -1035,6 +1067,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -1062,6 +1095,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -1089,6 +1123,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -1126,6 +1161,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -1156,6 +1192,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -1184,6 +1221,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -1224,6 +1262,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -1255,6 +1294,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -1307,6 +1347,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -1333,6 +1374,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -1369,6 +1411,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
@@ -1395,6 +1438,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fno-strict-aliasing",
+            "-Wno-mismatched-tags",
         },
     });
 
