@@ -59,6 +59,8 @@ def process_cmake_file(file_path, output_file):
                 re.search(r"\S+\.cc|\S+\.cpp", match) for match in matches
             )
 
+            # has_c_files = any(re.search(r"\S+\.c", match) for match in matches)
+
             # Link based on presence of .cc or .cpp files
             if has_cpp_files:
                 output_file.write(f"{parent_folder}_{folder_name}.linkLibCpp();\n")
@@ -84,12 +86,13 @@ def process_cmake_file(file_path, output_file):
                         )
                         output_file.write(f'"{file_rel_path}", ')
 
+                output_file.write("}, .flags = &.{")
+                if has_cpp_files:
+                    output_file.write('"-std=c++17",')
                 output_file.write(
-                    '}, .flags = &.{ "-std=c++17","-Wall","-Wextra","-fPIC","-I./src","-I/tmp/benchmark/include","-I/tmp/gflags/include","-I/tmp/glog/src","-I/tmp/glog","-I/tmp/googletest/googletest/include","-I/tmp/googletest/googlemock/include",},'
+                    '"-Wall","-Wextra","-fPIC","-I./src","-I/tmp/benchmark/include","-I/tmp/gflags/include","-I/tmp/glog/src","-I/tmp/glog","-I/tmp/googletest/googletest/include","-I/tmp/googletest/googlemock/include",},'
                 )
-                # output_file.write('}, .flags = &.{"-std=c++17"},')
                 output_file.write("});\n")
-                # output_file.write("}});\n")
                 output_file.write("\n")
 
 

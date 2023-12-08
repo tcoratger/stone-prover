@@ -1256,7 +1256,6 @@ pub fn build(b: *std.build.Builder) void {
             "src/third_party/XKCP/KeccakP-1600-OptimizedAVX2/KeccakP-1600-AVX2.s",
         },
         .flags = &.{
-            "-std=c++17",
             "-Wall",
             "-Wextra",
             "-fPIC",
@@ -1282,7 +1281,6 @@ pub fn build(b: *std.build.Builder) void {
             "src/third_party/XKCP/CompactFIPS202/Keccak-readable-and-compact.c",
         },
         .flags = &.{
-            "-std=c++17",
             "-Wall",
             "-Wextra",
             "-fPIC",
@@ -1343,7 +1341,6 @@ pub fn build(b: *std.build.Builder) void {
             "src/third_party/blake2/blake2s.c",
         },
         .flags = &.{
-            "-std=c++17",
             "-Wall",
             "-Wextra",
             "-fPIC",
