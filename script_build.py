@@ -83,7 +83,13 @@ def process_cmake_file(file_path, output_file):
                             os.path.join(os.path.dirname(file_path), f), os.getcwd()
                         )
                         output_file.write(f'"{file_rel_path}", ')
-                output_file.write("}});\n")
+
+                output_file.write(
+                    '}, .flags = &.{ "-std=c++17","-Wall","-Wextra","-fPIC","-I./src","-I/tmp/benchmark/include","-I/tmp/gflags/include","-I/tmp/glog/src","-I/tmp/glog","-I/tmp/googletest/googletest/include",},'
+                )
+                # output_file.write('}, .flags = &.{"-std=c++17"},')
+                output_file.write("});\n")
+                # output_file.write("}});\n")
                 output_file.write("\n")
 
 

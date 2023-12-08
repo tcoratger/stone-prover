@@ -19,3 +19,6 @@ COPY src /app/src
 COPY e2e_test /app/e2e_test
 
 WORKDIR /app/
+
+RUN /local/zig build
+
