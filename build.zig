@@ -18,6 +18,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
     cpu_air_prover.linkLibCpp();
@@ -48,6 +49,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -82,6 +84,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -108,6 +111,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -135,6 +139,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -163,6 +168,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -188,6 +194,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -220,6 +227,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -250,6 +258,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -292,6 +301,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -318,6 +328,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -346,6 +357,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -373,6 +385,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -403,6 +416,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -430,6 +444,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -457,6 +472,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -494,6 +510,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -522,6 +539,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -557,6 +575,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -584,6 +603,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -609,6 +629,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -634,6 +655,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -659,6 +681,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -684,6 +707,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -710,6 +734,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -735,6 +760,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -760,6 +786,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -786,6 +813,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -816,6 +844,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -841,6 +870,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -866,6 +896,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -894,6 +925,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -928,6 +960,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -968,6 +1001,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -993,6 +1027,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -1018,6 +1053,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -1053,6 +1089,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -1081,6 +1118,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -1107,6 +1145,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -1145,6 +1184,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -1174,6 +1214,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -1225,6 +1266,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -1250,6 +1292,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -1284,6 +1327,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
@@ -1309,6 +1353,7 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/glog/src",
             "-I/tmp/glog",
             "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
         },
     });
 
