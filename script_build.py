@@ -90,7 +90,7 @@ def process_cmake_file(file_path, output_file):
                 if has_cpp_files:
                     output_file.write('"-std=c++17",')
                 output_file.write(
-                    '"-Wall","-Wextra","-fPIC","-I./src","-I/tmp/benchmark/include","-I/tmp/gflags/include","-I/tmp/glog/src","-I/tmp/glog","-I/tmp/googletest/googletest/include","-I/tmp/googletest/googlemock/include","-fno-strict-aliasing", "-Wno-mismatched-tags", " -fconstexpr-steps=20000000",},'
+                    '"-Wall","-Wextra","-fPIC","-I./src","-I/tmp/benchmark/include","-I/tmp/gflags/include","-I/tmp/glog/src","-I/tmp/glog","-I/tmp/googletest/googletest/include","-I/tmp/googletest/googlemock/include","-fno-strict-aliasing", "-Wno-mismatched-tags", "-fconstexpr-steps=20000000",},'
                 )
                 output_file.write("});\n")
                 output_file.write("\n")
