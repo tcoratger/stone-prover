@@ -2,6 +2,24 @@ import os
 import re
 import subprocess
 
+flags = """
+    "-Wall",
+    "-Wextra",
+    "-fPIC",
+    "-I./src",
+    "-I/tmp/benchmark/include",
+    "-I/tmp/gflags/include",
+    "-I/tmp/glog/src",
+    "-I/tmp/glog",
+    "-I/tmp/googletest/googletest/include",
+    "-I/tmp/googletest/googlemock/include",
+    "-fconstexpr-steps=20000000",
+    "-l/tmp/glog/libglog.a",
+    "-l/tmp/glflags/lib/libgflags.a",
+    "-l/tmp/googletest/googlemock/libgmock.a",
+    "-l/tmp/googletest/googlemock/gtest/libgtest.a",
+"""
+
 build_setup = """const std = @import("std");
 
 pub fn build(b: *std.build.Builder) void {
@@ -16,7 +34,8 @@ install_exe = """const install_exe = b.addInstallArtifact(
 b.getInstallStep().dependOn(&install_exe.step); }"""
 
 
-prover_exec = """var cpu_air_prover = b.addExecutable(.{
+prover_exec = (
+    """var cpu_air_prover = b.addExecutable(.{
     .name = "cpu_air_prover",
     .target = target,
     .optimize = optimize,
@@ -26,22 +45,16 @@ cpu_air_prover.addCSourceFile(.{
         .path = "src/starkware/main/cpu/cpu_air_prover_main.cc"
     },
     .flags = &.{
-        "-std=c++17",
-        "-Wall",
-        "-Wextra",
-        "-fPIC",
-        "-I./src",
-        "-I/tmp/benchmark/include",
-        "-I/tmp/gflags/include",
-        "-I/tmp/glog/src",
-        "-I/tmp/glog",
-        "-I/tmp/googletest/googletest/include",
-        "-I/tmp/googletest/googlemock/include",
+    "-std=c++17","""
+    + flags
+    + """
     },
 });
 cpu_air_prover.linkLibCpp();"""
+)
 
-verifier_exec = """var cpu_air_verifier = b.addExecutable(.{
+verifier_exec = (
+    """var cpu_air_verifier = b.addExecutable(.{
     .name = "cpu_air_verifier",
     .target = target,
     .optimize = optimize,
@@ -51,20 +64,32 @@ cpu_air_verifier.addCSourceFile(.{
         .path = "src/starkware/main/cpu/cpu_air_verifier_main.cc"
     },
     .flags = &.{
-        "-std=c++17",
-        "-Wall",
-        "-Wextra",
-        "-fPIC",
-        "-I./src",
-        "-I/tmp/benchmark/include",
-        "-I/tmp/gflags/include",
-        "-I/tmp/glog/src",
-        "-I/tmp/glog",
-        "-I/tmp/googletest/googletest/include",
-        "-I/tmp/googletest/googlemock/include",
+    "-std=c++17","""
+    + flags
+    + """
     },
 });
 cpu_air_verifier.linkLibCpp();"""
+)
+
+gtest_exec = (
+    """var gtest = b.addExecutable(.{
+    .name = "gtest",
+    .target = target,
+    .optimize = optimize,
+});
+gtest.addCSourceFile(.{
+    .file = .{
+        .path = "src/starkware/gtest/gtest_main.cc"
+    },
+    .flags = &.{
+    "-std=c++17","""
+    + flags
+    + """
+    },
+});
+gtest.linkLibCpp();"""
+)
 
 
 def clean_folder_name(folder_name):
@@ -104,7 +129,10 @@ def process_cmake_file(file_path, output_file):
             os.path.basename(os.path.dirname(os.path.dirname(file_path)))
         )
 
-        if f"{parent_folder}_{folder_name}" != "main_cpu":
+        if (
+            f"{parent_folder}_{folder_name}" != "main_cpu"
+            and f"{folder_name}" != "gtest"
+        ):
             # Write static library declaration to output_file
             output_file.write(
                 f"const {parent_folder}_{folder_name} = b.addStaticLibrary(.{{\n"
@@ -119,6 +147,7 @@ def process_cmake_file(file_path, output_file):
             output_file.write(
                 f"cpu_air_verifier.linkLibrary({parent_folder}_{folder_name});\n"
             )
+            output_file.write(f"gtest.linkLibrary({parent_folder}_{folder_name});\n")
 
             # Process file matches
             if matches:
@@ -158,10 +187,8 @@ def process_cmake_file(file_path, output_file):
                     output_file.write("}, .flags = &.{")
                     if has_cpp_files:
                         output_file.write('"-std=c++17",')
-                    output_file.write(
-                        '"-Wall","-Wextra","-fPIC","-I./src","-I/tmp/benchmark/include","-I/tmp/gflags/include","-I/tmp/glog/src","-I/tmp/glog","-I/tmp/googletest/googletest/include","-I/tmp/googletest/googlemock/include","-fno-strict-aliasing", "-Wno-mismatched-tags", "-fconstexpr-steps=20000000",},'
-                    )
-                    output_file.write("});\n")
+                    output_file.write(flags)
+                    output_file.write("}});\n")
                     output_file.write("\n")
 
 
@@ -192,7 +219,10 @@ def process_subdirectories(file_path, output_file):
                     output_file.write(
                         f"{parent_folder}_{folder_name}.linkLibrary({clean_folder_name(parts[-2])}_{clean_folder_name(parts[-1])});\n"
                     )
-                elif f"{folder_name}_{clean_folder_name(match)}" != "main_cpu":
+                elif (
+                    f"{folder_name}_{clean_folder_name(match)}" != "main_cpu"
+                    and f"{clean_folder_name(match)}" != "gtest"
+                ):
                     output_file.write(
                         f"{parent_folder}_{folder_name}.linkLibrary({folder_name}_{clean_folder_name(match)});\n"
                     )
@@ -247,6 +277,8 @@ def main():
         + prover_exec
         + "\n\n"
         + verifier_exec
+        + "\n\n"
+        + gtest_exec
         + "\n\n"
         + output_content.strip()
         + "\n\n"
