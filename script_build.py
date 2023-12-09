@@ -27,11 +27,17 @@ pub fn build(b: *std.build.Builder) void {
     const optimize = b.standardOptimizeOption(.{});
 """
 
-install_exe = """const install_exe = b.addInstallArtifact(
+install_exe = """const install_exe_prover = b.addInstallArtifact(
     cpu_air_prover,
     .{},
 );
-b.getInstallStep().dependOn(&install_exe.step); }"""
+b.getInstallStep().dependOn(&install_exe_prover.step);
+
+const install_exe_verifier = b.addInstallArtifact(
+    cpu_air_prover,
+    .{},
+);
+b.getInstallStep().dependOn(&install_exe_verifier.step); }"""
 
 
 prover_exec = (

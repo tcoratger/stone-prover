@@ -1571,9 +1571,15 @@ pub fn build(b: *std.build.Builder) void {
     gtest.linkLibrary(zkp_stone_prover);
     zkp_stone_prover.linkLibrary(stone_prover_src);
 
-    const install_exe = b.addInstallArtifact(
+    const install_exe_prover = b.addInstallArtifact(
         cpu_air_prover,
         .{},
     );
-    b.getInstallStep().dependOn(&install_exe.step);
+    b.getInstallStep().dependOn(&install_exe_prover.step);
+
+    const install_exe_verifier = b.addInstallArtifact(
+        cpu_air_prover,
+        .{},
+    );
+    b.getInstallStep().dependOn(&install_exe_verifier.step);
 }
