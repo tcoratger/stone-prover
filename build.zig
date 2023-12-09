@@ -4,7 +4,11 @@ pub fn build(b: *std.build.Builder) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    var cpu_air_prover = b.addExecutable(.{ .name = "cpu_air_prover", .target = target, .optimize = optimize });
+    var cpu_air_prover = b.addExecutable(.{
+        .name = "cpu_air_prover",
+        .target = target,
+        .optimize = optimize,
+    });
     cpu_air_prover.addCSourceFile(.{
         .file = .{ .path = "src/starkware/main/cpu/cpu_air_prover_main.cc" },
         .flags = &.{
@@ -23,7 +27,29 @@ pub fn build(b: *std.build.Builder) void {
     });
     cpu_air_prover.linkLibCpp();
 
-    // BEGIN
+    var cpu_air_verifier = b.addExecutable(.{
+        .name = "cpu_air_verifier",
+        .target = target,
+        .optimize = optimize,
+    });
+    cpu_air_verifier.addCSourceFile(.{
+        .file = .{ .path = "src/starkware/main/cpu/cpu_air_verifier_main.cc" },
+        .flags = &.{
+            "-std=c++17",
+            "-Wall",
+            "-Wextra",
+            "-fPIC",
+            "-I./src",
+            "-I/tmp/benchmark/include",
+            "-I/tmp/gflags/include",
+            "-I/tmp/glog/src",
+            "-I/tmp/glog",
+            "-I/tmp/googletest/googletest/include",
+            "-I/tmp/googletest/googlemock/include",
+        },
+    });
+    cpu_air_verifier.linkLibCpp();
+
     const algebra_lde = b.addStaticLibrary(.{
         .name = "algebra_lde",
         .target = target,
@@ -1514,11 +1540,6 @@ pub fn build(b: *std.build.Builder) void {
     });
     cpu_air_prover.linkLibrary(zkp_stone_prover);
     zkp_stone_prover.linkLibrary(stone_prover_src);
-
-    // END
-
-    // addLibrary(b, "cpu_air_prover_main", "starkware/main/cpu/cpu_air_prover_main.cc", true, target, optimize, cpu_air_prover);
-    // addLibrary(b, "cpu_air_verifier_main", "starkware/main/cpu/cpu_air_verifier_main.cc", true, target, optimize);
 
     const install_exe = b.addInstallArtifact(
         cpu_air_prover,

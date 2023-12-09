@@ -2,6 +2,70 @@ import os
 import re
 import subprocess
 
+build_setup = """const std = @import("std");
+
+pub fn build(b: *std.build.Builder) void {
+    const target = b.standardTargetOptions(.{});
+    const optimize = b.standardOptimizeOption(.{});
+"""
+
+install_exe = """const install_exe = b.addInstallArtifact(
+    cpu_air_prover,
+    .{},
+);
+b.getInstallStep().dependOn(&install_exe.step); }"""
+
+
+prover_exec = """var cpu_air_prover = b.addExecutable(.{
+    .name = "cpu_air_prover",
+    .target = target,
+    .optimize = optimize,
+});
+cpu_air_prover.addCSourceFile(.{
+    .file = .{
+        .path = "src/starkware/main/cpu/cpu_air_prover_main.cc"
+    },
+    .flags = &.{
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-fPIC",
+        "-I./src",
+        "-I/tmp/benchmark/include",
+        "-I/tmp/gflags/include",
+        "-I/tmp/glog/src",
+        "-I/tmp/glog",
+        "-I/tmp/googletest/googletest/include",
+        "-I/tmp/googletest/googlemock/include",
+    },
+});
+cpu_air_prover.linkLibCpp();"""
+
+verifier_exec = """var cpu_air_verifier = b.addExecutable(.{
+    .name = "cpu_air_verifier",
+    .target = target,
+    .optimize = optimize,
+});
+cpu_air_verifier.addCSourceFile(.{
+    .file = .{
+        .path = "src/starkware/main/cpu/cpu_air_verifier_main.cc"
+    },
+    .flags = &.{
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-fPIC",
+        "-I./src",
+        "-I/tmp/benchmark/include",
+        "-I/tmp/gflags/include",
+        "-I/tmp/glog/src",
+        "-I/tmp/glog",
+        "-I/tmp/googletest/googletest/include",
+        "-I/tmp/googletest/googlemock/include",
+    },
+});
+cpu_air_verifier.linkLibCpp();"""
+
 
 def clean_folder_name(folder_name):
     """
@@ -172,18 +236,17 @@ def main():
     with open(build_zig_path, "r") as build_zig:
         build_content = build_zig.read()
 
-    # Find "BEGIN" and "END" markers
-    begin_marker = "// BEGIN\n"
-    end_marker = "// END\n"
-    begin_index = build_content.find(begin_marker) + len(begin_marker)
-    end_index = build_content.find(end_marker)
-
-    # Insert output.txt content between "BEGIN" and "END" markers in build.zig
     updated_build_content = (
-        build_content[:begin_index]
+        build_setup
+        + "\n\n"
+        + prover_exec
+        + "\n\n"
+        + verifier_exec
+        + "\n\n"
         + output_content.strip()
         + "\n\n"
-        + build_content[end_index:]
+        + install_exe
+        + "\n\n"
     )
 
     # Write updated content to build.zig
