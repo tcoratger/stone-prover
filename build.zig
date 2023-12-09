@@ -56,6 +56,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(algebra_lde);
+    cpu_air_verifier.linkLibrary(algebra_lde);
     algebra_lde.linkLibCpp();
     algebra_lde.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -88,6 +89,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(algebra_fields);
+    cpu_air_verifier.linkLibrary(algebra_fields);
     algebra_fields.linkLibCpp();
     algebra_fields.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -126,6 +128,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(algebra_fft);
+    cpu_air_verifier.linkLibrary(algebra_fft);
     algebra_fft.linkLibCpp();
     algebra_fft.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -156,6 +159,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(algebra_utils);
+    cpu_air_verifier.linkLibrary(algebra_utils);
     algebra_utils.linkLibCpp();
     algebra_utils.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -187,6 +191,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(algebra_domains);
+    cpu_air_verifier.linkLibrary(algebra_domains);
     algebra_domains.linkLibCpp();
     algebra_domains.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -219,6 +224,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(algebra_elliptic_curve);
+    cpu_air_verifier.linkLibrary(algebra_elliptic_curve);
     algebra_elliptic_curve.linkLibCpp();
     algebra_elliptic_curve.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -248,6 +254,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(algebra_polymorphic);
+    cpu_air_verifier.linkLibrary(algebra_polymorphic);
     algebra_polymorphic.linkLibCpp();
     algebra_polymorphic.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -284,6 +291,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_algebra);
+    cpu_air_verifier.linkLibrary(starkware_algebra);
     starkware_algebra.linkLibCpp();
     starkware_algebra.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -326,6 +334,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_stark);
+    cpu_air_verifier.linkLibrary(starkware_stark);
     starkware_stark.linkLibCpp();
     starkware_stark.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -358,42 +367,13 @@ pub fn build(b: *std.build.Builder) void {
         },
     });
 
-    const main_cpu = b.addStaticLibrary(.{
-        .name = "main_cpu",
-        .target = target,
-        .optimize = optimize,
-    });
-    cpu_air_prover.linkLibrary(main_cpu);
-    main_cpu.linkLibCpp();
-    main_cpu.addCSourceFiles(.{
-        .files = &[_][]const u8{
-            "src/starkware/main/cpu/cpu_air_prover_main.cc",
-            "src/starkware/main/cpu/cpu_air_verifier_main.cc",
-        },
-        .flags = &.{
-            "-std=c++17",
-            "-Wall",
-            "-Wextra",
-            "-fPIC",
-            "-I./src",
-            "-I/tmp/benchmark/include",
-            "-I/tmp/gflags/include",
-            "-I/tmp/glog/src",
-            "-I/tmp/glog",
-            "-I/tmp/googletest/googletest/include",
-            "-I/tmp/googletest/googlemock/include",
-            "-fno-strict-aliasing",
-            "-Wno-mismatched-tags",
-            "-fconstexpr-steps=20000000",
-        },
-    });
-
     const starkware_main = b.addStaticLibrary(.{
         .name = "starkware_main",
         .target = target,
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_main);
+    cpu_air_verifier.linkLibrary(starkware_main);
     starkware_main.linkLibCpp();
     starkware_main.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -420,14 +400,13 @@ pub fn build(b: *std.build.Builder) void {
         },
     });
 
-    starkware_main.linkLibrary(main_cpu);
-
     const crypt_tools_hash_context = b.addStaticLibrary(.{
         .name = "crypt_tools_hash_context",
         .target = target,
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(crypt_tools_hash_context);
+    cpu_air_verifier.linkLibrary(crypt_tools_hash_context);
     crypt_tools_hash_context.linkLibCpp();
     crypt_tools_hash_context.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -457,6 +436,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_crypt_tools);
+    cpu_air_verifier.linkLibrary(starkware_crypt_tools);
     starkware_crypt_tools.linkLibCpp();
     starkware_crypt_tools.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -493,6 +473,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_gtest);
+    cpu_air_verifier.linkLibrary(starkware_gtest);
     starkware_gtest.linkLibCpp();
     starkware_gtest.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -522,6 +503,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(commitment_scheme_merkle);
+    cpu_air_verifier.linkLibrary(commitment_scheme_merkle);
     commitment_scheme_merkle.linkLibCpp();
     commitment_scheme_merkle.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -553,6 +535,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_commitment_scheme);
+    cpu_air_verifier.linkLibrary(starkware_commitment_scheme);
     starkware_commitment_scheme.linkLibCpp();
     starkware_commitment_scheme.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -596,6 +579,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_proof_system);
+    cpu_air_verifier.linkLibrary(starkware_proof_system);
     starkware_proof_system.linkLibCpp();
     starkware_proof_system.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -626,6 +610,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_channel);
+    cpu_air_verifier.linkLibrary(starkware_channel);
     starkware_channel.linkLibCpp();
     starkware_channel.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -665,6 +650,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_error_handling);
+    cpu_air_verifier.linkLibrary(starkware_error_handling);
     starkware_error_handling.linkLibCpp();
     starkware_error_handling.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -696,6 +682,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_math);
+    cpu_air_verifier.linkLibrary(starkware_math);
     starkware_math.linkLibCpp();
     starkware_math.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -725,6 +712,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(air_boundary_constraints);
+    cpu_air_verifier.linkLibrary(air_boundary_constraints);
     air_boundary_constraints.linkLibCpp();
     air_boundary_constraints.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -754,6 +742,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(air_fibonacci);
+    cpu_air_verifier.linkLibrary(air_fibonacci);
     air_fibonacci.linkLibCpp();
     air_fibonacci.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -783,6 +772,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(components_perm_range_check);
+    cpu_air_verifier.linkLibrary(components_perm_range_check);
     components_perm_range_check.linkLibCpp();
     components_perm_range_check.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -812,6 +802,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(components_diluted_check);
+    cpu_air_verifier.linkLibrary(components_diluted_check);
     components_diluted_check.linkLibCpp();
     components_diluted_check.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -842,6 +833,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(components_memory);
+    cpu_air_verifier.linkLibrary(components_memory);
     components_memory.linkLibCpp();
     components_memory.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -871,6 +863,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(components_permutation);
+    cpu_air_verifier.linkLibrary(components_permutation);
     components_permutation.linkLibCpp();
     components_permutation.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -900,6 +893,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(air_components);
+    cpu_air_verifier.linkLibrary(air_components);
     air_components.linkLibCpp();
     air_components.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -935,6 +929,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(air_degree_three_example);
+    cpu_air_verifier.linkLibrary(air_degree_three_example);
     air_degree_three_example.linkLibCpp();
     air_degree_three_example.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -964,6 +959,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(air_boundary);
+    cpu_air_verifier.linkLibrary(air_boundary);
     air_boundary.linkLibCpp();
     air_boundary.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -993,6 +989,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(cpu_board);
+    cpu_air_verifier.linkLibrary(cpu_board);
     cpu_board.linkLibCpp();
     cpu_board.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1022,6 +1019,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_air);
+    cpu_air_verifier.linkLibrary(starkware_air);
     starkware_air.linkLibCpp();
     starkware_air.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1061,6 +1059,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(vm_cpp);
+    cpu_air_verifier.linkLibrary(vm_cpp);
     vm_cpp.linkLibCpp();
     vm_cpp.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1092,6 +1091,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_utils);
+    cpu_air_verifier.linkLibrary(starkware_utils);
     starkware_utils.linkLibCpp();
     starkware_utils.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1136,6 +1136,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(statement_fibonacci);
+    cpu_air_verifier.linkLibrary(statement_fibonacci);
     statement_fibonacci.linkLibCpp();
     statement_fibonacci.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1165,6 +1166,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(statement_cpu);
+    cpu_air_verifier.linkLibrary(statement_cpu);
     statement_cpu.linkLibCpp();
     statement_cpu.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1194,6 +1196,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_statement);
+    cpu_air_verifier.linkLibrary(starkware_statement);
     starkware_statement.linkLibrary(statement_cpu);
     starkware_statement.linkLibrary(statement_fibonacci);
 
@@ -1203,6 +1206,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_stl_utils);
+    cpu_air_verifier.linkLibrary(starkware_stl_utils);
     starkware_stl_utils.linkLibCpp();
     starkware_stl_utils.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1233,6 +1237,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_randomness);
+    cpu_air_verifier.linkLibrary(starkware_randomness);
     starkware_randomness.linkLibCpp();
     starkware_randomness.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1265,6 +1270,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_fft_utils);
+    cpu_air_verifier.linkLibrary(starkware_fft_utils);
     starkware_fft_utils.linkLibCpp();
     starkware_fft_utils.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1295,6 +1301,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_fri);
+    cpu_air_verifier.linkLibrary(starkware_fri);
     starkware_fri.linkLibCpp();
     starkware_fri.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1337,6 +1344,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(starkware_composition_polynomial);
+    cpu_air_verifier.linkLibrary(starkware_composition_polynomial);
     starkware_composition_polynomial.linkLibCpp();
     starkware_composition_polynomial.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1370,6 +1378,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(src_starkware);
+    cpu_air_verifier.linkLibrary(src_starkware);
     src_starkware.linkLibrary(starkware_air);
     src_starkware.linkLibrary(starkware_algebra);
     src_starkware.linkLibrary(vm_cpp);
@@ -1396,6 +1405,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(XKCP_KeccakP_1600_OptimizedAVX2);
+    cpu_air_verifier.linkLibrary(XKCP_KeccakP_1600_OptimizedAVX2);
     XKCP_KeccakP_1600_OptimizedAVX2.linkLibC();
     XKCP_KeccakP_1600_OptimizedAVX2.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1424,6 +1434,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(XKCP_CompactFIPS202);
+    cpu_air_verifier.linkLibrary(XKCP_CompactFIPS202);
     XKCP_CompactFIPS202.linkLibC();
     XKCP_CompactFIPS202.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1452,6 +1463,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(third_party_XKCP);
+    cpu_air_verifier.linkLibrary(third_party_XKCP);
     third_party_XKCP.linkLibrary(XKCP_CompactFIPS202);
     third_party_XKCP.linkLibrary(XKCP_KeccakP_1600_OptimizedAVX2);
 
@@ -1461,6 +1473,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(third_party_jsoncpp);
+    cpu_air_verifier.linkLibrary(third_party_jsoncpp);
     third_party_jsoncpp.linkLibCpp();
     third_party_jsoncpp.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1490,6 +1503,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(third_party_blake2);
+    cpu_air_verifier.linkLibrary(third_party_blake2);
     third_party_blake2.linkLibC();
     third_party_blake2.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -1518,6 +1532,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(src_third_party);
+    cpu_air_verifier.linkLibrary(src_third_party);
     src_third_party.linkLibC();
     src_third_party.linkLibrary(third_party_jsoncpp);
     src_third_party.linkLibrary(third_party_blake2);
@@ -1529,6 +1544,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(stone_prover_src);
+    cpu_air_verifier.linkLibrary(stone_prover_src);
     stone_prover_src.linkLibC();
     stone_prover_src.linkLibrary(src_starkware);
     stone_prover_src.linkLibrary(src_third_party);
@@ -1539,6 +1555,7 @@ pub fn build(b: *std.build.Builder) void {
         .optimize = optimize,
     });
     cpu_air_prover.linkLibrary(zkp_stone_prover);
+    cpu_air_verifier.linkLibrary(zkp_stone_prover);
     zkp_stone_prover.linkLibrary(stone_prover_src);
 
     const install_exe = b.addInstallArtifact(

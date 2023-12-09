@@ -104,60 +104,65 @@ def process_cmake_file(file_path, output_file):
             os.path.basename(os.path.dirname(os.path.dirname(file_path)))
         )
 
-        # Write static library declaration to output_file
-        output_file.write(
-            f"const {parent_folder}_{folder_name} = b.addStaticLibrary(.{{\n"
-        )
-        output_file.write(f'    .name = "{parent_folder}_{folder_name}",\n')
-        output_file.write("    .target = target,\n")
-        output_file.write("    .optimize = optimize,\n")
-        output_file.write("});\n")
-        output_file.write(
-            f"cpu_air_prover.linkLibrary({parent_folder}_{folder_name});\n"
-        )
-
-        # Process file matches
-        if matches:
-            # Check for .cc or .cpp files
-            has_cpp_files = any(
-                re.search(r"\S+\.cc|\S+\.cpp", match) for match in matches
+        if f"{parent_folder}_{folder_name}" != "main_cpu":
+            # Write static library declaration to output_file
+            output_file.write(
+                f"const {parent_folder}_{folder_name} = b.addStaticLibrary(.{{\n"
+            )
+            output_file.write(f'    .name = "{parent_folder}_{folder_name}",\n')
+            output_file.write("    .target = target,\n")
+            output_file.write("    .optimize = optimize,\n")
+            output_file.write("});\n")
+            output_file.write(
+                f"cpu_air_prover.linkLibrary({parent_folder}_{folder_name});\n"
+            )
+            output_file.write(
+                f"cpu_air_verifier.linkLibrary({parent_folder}_{folder_name});\n"
             )
 
-            # has_c_files = any(re.search(r"\S+\.c", match) for match in matches)
-
-            # Link based on presence of .cc or .cpp files
-            if has_cpp_files:
-                output_file.write(f"{parent_folder}_{folder_name}.linkLibCpp();\n")
-            else:
-                output_file.write(f"{parent_folder}_{folder_name}.linkLibC();\n")
-
-            # Process files found in matches
-            has_files = any(
-                re.search(r"\S+\.cc|\S+\.cpp|\S+\.c|\S+\.s", match) for match in matches
-            )
-            if has_files:
-                output_file.write(
-                    f"{parent_folder}_{folder_name}.addCSourceFiles(.{{.files = &[_][]const u8{{"
+            # Process file matches
+            if matches:
+                # Check for .cc or .cpp files
+                has_cpp_files = any(
+                    re.search(r"\S+\.cc|\S+\.cpp", match) for match in matches
                 )
 
-                # Write file paths to output_file
-                for match in matches:
-                    files = re.findall(r"\S+\.cc|\S+\.cpp|\S+\.c|\S+\.s", match)
+                # has_c_files = any(re.search(r"\S+\.c", match) for match in matches)
 
-                    for f in files:
-                        file_rel_path = os.path.relpath(
-                            os.path.join(os.path.dirname(file_path), f), os.getcwd()
-                        )
-                        output_file.write(f'"{file_rel_path}", ')
-
-                output_file.write("}, .flags = &.{")
+                # Link based on presence of .cc or .cpp files
                 if has_cpp_files:
-                    output_file.write('"-std=c++17",')
-                output_file.write(
-                    '"-Wall","-Wextra","-fPIC","-I./src","-I/tmp/benchmark/include","-I/tmp/gflags/include","-I/tmp/glog/src","-I/tmp/glog","-I/tmp/googletest/googletest/include","-I/tmp/googletest/googlemock/include","-fno-strict-aliasing", "-Wno-mismatched-tags", "-fconstexpr-steps=20000000",},'
+                    output_file.write(f"{parent_folder}_{folder_name}.linkLibCpp();\n")
+                else:
+                    output_file.write(f"{parent_folder}_{folder_name}.linkLibC();\n")
+
+                # Process files found in matches
+                has_files = any(
+                    re.search(r"\S+\.cc|\S+\.cpp|\S+\.c|\S+\.s", match)
+                    for match in matches
                 )
-                output_file.write("});\n")
-                output_file.write("\n")
+                if has_files:
+                    output_file.write(
+                        f"{parent_folder}_{folder_name}.addCSourceFiles(.{{.files = &[_][]const u8{{"
+                    )
+
+                    # Write file paths to output_file
+                    for match in matches:
+                        files = re.findall(r"\S+\.cc|\S+\.cpp|\S+\.c|\S+\.s", match)
+
+                        for f in files:
+                            file_rel_path = os.path.relpath(
+                                os.path.join(os.path.dirname(file_path), f), os.getcwd()
+                            )
+                            output_file.write(f'"{file_rel_path}", ')
+
+                    output_file.write("}, .flags = &.{")
+                    if has_cpp_files:
+                        output_file.write('"-std=c++17",')
+                    output_file.write(
+                        '"-Wall","-Wextra","-fPIC","-I./src","-I/tmp/benchmark/include","-I/tmp/gflags/include","-I/tmp/glog/src","-I/tmp/glog","-I/tmp/googletest/googletest/include","-I/tmp/googletest/googlemock/include","-fno-strict-aliasing", "-Wno-mismatched-tags", "-fconstexpr-steps=20000000",},'
+                    )
+                    output_file.write("});\n")
+                    output_file.write("\n")
 
 
 def process_subdirectories(file_path, output_file):
@@ -187,7 +192,7 @@ def process_subdirectories(file_path, output_file):
                     output_file.write(
                         f"{parent_folder}_{folder_name}.linkLibrary({clean_folder_name(parts[-2])}_{clean_folder_name(parts[-1])});\n"
                     )
-                else:
+                elif f"{folder_name}_{clean_folder_name(match)}" != "main_cpu":
                     output_file.write(
                         f"{parent_folder}_{folder_name}.linkLibrary({folder_name}_{clean_folder_name(match)});\n"
                     )
