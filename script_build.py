@@ -14,10 +14,6 @@ flags = """
     "-I/tmp/googletest/googletest/include",
     "-I/tmp/googletest/googlemock/include",
     "-fconstexpr-steps=20000000",
-    "-l/tmp/glog/libglog.a",
-    "-l/tmp/glflags/lib/libgflags.a",
-    "-l/tmp/googletest/googlemock/libgmock.a",
-    "-l/tmp/googletest/googlemock/gtest/libgtest.a",
 """
 
 build_setup = """const std = @import("std");
@@ -39,7 +35,6 @@ const install_exe_verifier = b.addInstallArtifact(
 );
 b.getInstallStep().dependOn(&install_exe_verifier.step); }"""
 
-
 prover_exec = (
     """var cpu_air_prover = b.addExecutable(.{
     .name = "cpu_air_prover",
@@ -56,7 +51,11 @@ cpu_air_prover.addCSourceFile(.{
     + """
     },
 });
-cpu_air_prover.linkLibCpp();"""
+cpu_air_prover.linkLibCpp();
+cpu_air_prover.linkSystemLibrary("dw");
+cpu_air_prover.linkSystemLibrary("glog");
+cpu_air_prover.linkSystemLibrary("gflags");
+"""
 )
 
 verifier_exec = (
@@ -75,7 +74,11 @@ cpu_air_verifier.addCSourceFile(.{
     + """
     },
 });
-cpu_air_verifier.linkLibCpp();"""
+cpu_air_verifier.linkLibCpp();
+cpu_air_verifier.linkSystemLibrary("dw");
+cpu_air_verifier.linkSystemLibrary("glog");
+cpu_air_verifier.linkSystemLibrary("gflags");
+"""
 )
 
 gtest_exec = (
@@ -94,7 +97,11 @@ gtest.addCSourceFile(.{
     + """
     },
 });
-gtest.linkLibCpp();"""
+gtest.linkLibCpp();
+gtest.linkSystemLibrary("dw");
+gtest.linkSystemLibrary("glog");
+gtest.linkSystemLibrary("gflags");
+"""
 )
 
 
@@ -169,6 +176,16 @@ def process_cmake_file(file_path, output_file):
                     output_file.write(f"{parent_folder}_{folder_name}.linkLibCpp();\n")
                 else:
                     output_file.write(f"{parent_folder}_{folder_name}.linkLibC();\n")
+
+                output_file.write(
+                    f'{parent_folder}_{folder_name}.linkSystemLibrary("dw");\n'
+                )
+                output_file.write(
+                    f'{parent_folder}_{folder_name}.linkSystemLibrary("glog");\n'
+                )
+                output_file.write(
+                    f'{parent_folder}_{folder_name}.linkSystemLibrary("gflags");\n'
+                )
 
                 # Process files found in matches
                 has_files = any(

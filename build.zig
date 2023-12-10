@@ -24,13 +24,12 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fconstexpr-steps=20000000",
-            "-l/tmp/glog/libglog.a",
-            "-l/tmp/glflags/lib/libgflags.a",
-            "-l/tmp/googletest/googlemock/libgmock.a",
-            "-l/tmp/googletest/googlemock/gtest/libgtest.a",
         },
     });
     cpu_air_prover.linkLibCpp();
+    cpu_air_prover.linkSystemLibrary("dw");
+    cpu_air_prover.linkSystemLibrary("glog");
+    cpu_air_prover.linkSystemLibrary("gflags");
 
     var cpu_air_verifier = b.addExecutable(.{
         .name = "cpu_air_verifier",
@@ -52,13 +51,12 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fconstexpr-steps=20000000",
-            "-l/tmp/glog/libglog.a",
-            "-l/tmp/glflags/lib/libgflags.a",
-            "-l/tmp/googletest/googlemock/libgmock.a",
-            "-l/tmp/googletest/googlemock/gtest/libgtest.a",
         },
     });
     cpu_air_verifier.linkLibCpp();
+    cpu_air_verifier.linkSystemLibrary("dw");
+    cpu_air_verifier.linkSystemLibrary("glog");
+    cpu_air_verifier.linkSystemLibrary("gflags");
 
     var gtest = b.addExecutable(.{
         .name = "gtest",
@@ -80,13 +78,12 @@ pub fn build(b: *std.build.Builder) void {
             "-I/tmp/googletest/googletest/include",
             "-I/tmp/googletest/googlemock/include",
             "-fconstexpr-steps=20000000",
-            "-l/tmp/glog/libglog.a",
-            "-l/tmp/glflags/lib/libgflags.a",
-            "-l/tmp/googletest/googlemock/libgmock.a",
-            "-l/tmp/googletest/googlemock/gtest/libgtest.a",
         },
     });
     gtest.linkLibCpp();
+    gtest.linkSystemLibrary("dw");
+    gtest.linkSystemLibrary("glog");
+    gtest.linkSystemLibrary("gflags");
 
     const algebra_lde = b.addStaticLibrary(.{
         .name = "algebra_lde",
@@ -97,6 +94,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(algebra_lde);
     gtest.linkLibrary(algebra_lde);
     algebra_lde.linkLibCpp();
+    algebra_lde.linkSystemLibrary("dw");
+    algebra_lde.linkSystemLibrary("glog");
+    algebra_lde.linkSystemLibrary("gflags");
     algebra_lde.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/lde/lde_test.cc",
         "src/starkware/algebra/lde/cached_lde_manager_test.cc",
@@ -115,10 +115,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const algebra_fields = b.addStaticLibrary(.{
@@ -130,6 +126,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(algebra_fields);
     gtest.linkLibrary(algebra_fields);
     algebra_fields.linkLibCpp();
+    algebra_fields.linkSystemLibrary("dw");
+    algebra_fields.linkSystemLibrary("glog");
+    algebra_fields.linkSystemLibrary("gflags");
     algebra_fields.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/fields/test_field_element_test.cc",
         "src/starkware/algebra/fields/long_field_element_test.cc",
@@ -154,10 +153,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const algebra_fft = b.addStaticLibrary(.{
@@ -169,6 +164,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(algebra_fft);
     gtest.linkLibrary(algebra_fft);
     algebra_fft.linkLibCpp();
+    algebra_fft.linkSystemLibrary("dw");
+    algebra_fft.linkSystemLibrary("glog");
+    algebra_fft.linkSystemLibrary("gflags");
     algebra_fft.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/fft/fft_test.cc",
         "src/starkware/algebra/fft/fft.cc",
@@ -185,10 +183,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const algebra_utils = b.addStaticLibrary(.{
@@ -200,6 +194,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(algebra_utils);
     gtest.linkLibrary(algebra_utils);
     algebra_utils.linkLibCpp();
+    algebra_utils.linkSystemLibrary("dw");
+    algebra_utils.linkSystemLibrary("glog");
+    algebra_utils.linkSystemLibrary("gflags");
     algebra_utils.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/utils/invoke_template_version_test.cc",
         "src/starkware/algebra/utils/name_to_field_test.cc",
@@ -217,10 +214,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const algebra_domains = b.addStaticLibrary(.{
@@ -232,6 +225,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(algebra_domains);
     gtest.linkLibrary(algebra_domains);
     algebra_domains.linkLibCpp();
+    algebra_domains.linkSystemLibrary("dw");
+    algebra_domains.linkSystemLibrary("glog");
+    algebra_domains.linkSystemLibrary("gflags");
     algebra_domains.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/domains/multiplicative_group_test.cc",
         "src/starkware/algebra/domains/list_of_cosets_test.cc",
@@ -250,10 +246,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const algebra_elliptic_curve = b.addStaticLibrary(.{
@@ -265,6 +257,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(algebra_elliptic_curve);
     gtest.linkLibrary(algebra_elliptic_curve);
     algebra_elliptic_curve.linkLibCpp();
+    algebra_elliptic_curve.linkSystemLibrary("dw");
+    algebra_elliptic_curve.linkSystemLibrary("glog");
+    algebra_elliptic_curve.linkSystemLibrary("gflags");
     algebra_elliptic_curve.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/elliptic_curve/elliptic_curve_test.cc",
     }, .flags = &.{
@@ -280,10 +275,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const algebra_polymorphic = b.addStaticLibrary(.{
@@ -295,6 +286,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(algebra_polymorphic);
     gtest.linkLibrary(algebra_polymorphic);
     algebra_polymorphic.linkLibCpp();
+    algebra_polymorphic.linkSystemLibrary("dw");
+    algebra_polymorphic.linkSystemLibrary("glog");
+    algebra_polymorphic.linkSystemLibrary("gflags");
     algebra_polymorphic.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/polymorphic/field_element_test.cc",
         "src/starkware/algebra/polymorphic/field_test.cc",
@@ -317,10 +311,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_algebra = b.addStaticLibrary(.{
@@ -332,6 +322,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_algebra);
     gtest.linkLibrary(starkware_algebra);
     starkware_algebra.linkLibCpp();
+    starkware_algebra.linkSystemLibrary("dw");
+    starkware_algebra.linkSystemLibrary("glog");
+    starkware_algebra.linkSystemLibrary("gflags");
     starkware_algebra.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/algebra/field_operations_test.cc",
         "src/starkware/algebra/field_operations_axioms_test.cc",
@@ -352,10 +345,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     starkware_algebra.linkLibrary(algebra_domains);
@@ -375,6 +364,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_stark);
     gtest.linkLibrary(starkware_stark);
     starkware_stark.linkLibCpp();
+    starkware_stark.linkSystemLibrary("dw");
+    starkware_stark.linkSystemLibrary("glog");
+    starkware_stark.linkSystemLibrary("gflags");
     starkware_stark.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/stark/committed_trace_test.cc",
         "src/starkware/stark/composition_oracle_test.cc",
@@ -399,10 +391,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_main = b.addStaticLibrary(.{
@@ -414,6 +402,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_main);
     gtest.linkLibrary(starkware_main);
     starkware_main.linkLibCpp();
+    starkware_main.linkSystemLibrary("dw");
+    starkware_main.linkSystemLibrary("glog");
+    starkware_main.linkSystemLibrary("gflags");
     starkware_main.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/main/verifier_main_helper_impl.cc",
         "src/starkware/main/prover_main_helper_impl.cc",
@@ -432,10 +423,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const crypt_tools_hash_context = b.addStaticLibrary(.{
@@ -447,6 +434,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(crypt_tools_hash_context);
     gtest.linkLibrary(crypt_tools_hash_context);
     crypt_tools_hash_context.linkLibCpp();
+    crypt_tools_hash_context.linkSystemLibrary("dw");
+    crypt_tools_hash_context.linkSystemLibrary("glog");
+    crypt_tools_hash_context.linkSystemLibrary("gflags");
     crypt_tools_hash_context.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/crypt_tools/hash_context/pedersen_hash_context.cc",
     }, .flags = &.{
@@ -462,10 +452,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_crypt_tools = b.addStaticLibrary(.{
@@ -477,6 +463,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_crypt_tools);
     gtest.linkLibrary(starkware_crypt_tools);
     starkware_crypt_tools.linkLibCpp();
+    starkware_crypt_tools.linkSystemLibrary("dw");
+    starkware_crypt_tools.linkSystemLibrary("glog");
+    starkware_crypt_tools.linkSystemLibrary("gflags");
     starkware_crypt_tools.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/crypt_tools/utils_test.cc",
         "src/starkware/crypt_tools/keccak_256_test.cc",
@@ -497,10 +486,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     starkware_crypt_tools.linkLibrary(crypt_tools_hash_context);
@@ -514,6 +499,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(commitment_scheme_merkle);
     gtest.linkLibrary(commitment_scheme_merkle);
     commitment_scheme_merkle.linkLibCpp();
+    commitment_scheme_merkle.linkSystemLibrary("dw");
+    commitment_scheme_merkle.linkSystemLibrary("glog");
+    commitment_scheme_merkle.linkSystemLibrary("gflags");
     commitment_scheme_merkle.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/commitment_scheme/merkle/merkle_test.cc",
         "src/starkware/commitment_scheme/merkle/merkle.cc",
@@ -531,10 +519,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_commitment_scheme = b.addStaticLibrary(.{
@@ -546,6 +530,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_commitment_scheme);
     gtest.linkLibrary(starkware_commitment_scheme);
     starkware_commitment_scheme.linkLibCpp();
+    starkware_commitment_scheme.linkSystemLibrary("dw");
+    starkware_commitment_scheme.linkSystemLibrary("glog");
+    starkware_commitment_scheme.linkSystemLibrary("gflags");
     starkware_commitment_scheme.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/commitment_scheme/table_prover_impl_test.cc",
         "src/starkware/commitment_scheme/parallel_table_prover_test.cc",
@@ -573,10 +560,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     starkware_commitment_scheme.linkLibrary(commitment_scheme_merkle);
@@ -590,6 +573,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_proof_system);
     gtest.linkLibrary(starkware_proof_system);
     starkware_proof_system.linkLibCpp();
+    starkware_proof_system.linkSystemLibrary("dw");
+    starkware_proof_system.linkSystemLibrary("glog");
+    starkware_proof_system.linkSystemLibrary("gflags");
     starkware_proof_system.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/proof_system/proof_system_test.cc",
         "src/starkware/proof_system/proof_system.cc",
@@ -606,10 +592,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_channel = b.addStaticLibrary(.{
@@ -621,6 +603,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_channel);
     gtest.linkLibrary(starkware_channel);
     starkware_channel.linkLibCpp();
+    starkware_channel.linkSystemLibrary("dw");
+    starkware_channel.linkSystemLibrary("glog");
+    starkware_channel.linkSystemLibrary("gflags");
     starkware_channel.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/channel/channel_test.cc",
         "src/starkware/channel/noninteractive_channel_test.cc",
@@ -646,10 +631,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_error_handling = b.addStaticLibrary(.{
@@ -661,6 +642,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_error_handling);
     gtest.linkLibrary(starkware_error_handling);
     starkware_error_handling.linkLibCpp();
+    starkware_error_handling.linkSystemLibrary("dw");
+    starkware_error_handling.linkSystemLibrary("glog");
+    starkware_error_handling.linkSystemLibrary("gflags");
     starkware_error_handling.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/error_handling/error_handling_test.cc",
         "src/starkware/error_handling/error_handling.cc",
@@ -678,10 +662,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_math = b.addStaticLibrary(.{
@@ -693,6 +673,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_math);
     gtest.linkLibrary(starkware_math);
     starkware_math.linkLibCpp();
+    starkware_math.linkSystemLibrary("dw");
+    starkware_math.linkSystemLibrary("glog");
+    starkware_math.linkSystemLibrary("gflags");
     starkware_math.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/math/math_test.cc",
     }, .flags = &.{
@@ -708,10 +691,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const air_boundary_constraints = b.addStaticLibrary(.{
@@ -723,6 +702,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(air_boundary_constraints);
     gtest.linkLibrary(air_boundary_constraints);
     air_boundary_constraints.linkLibCpp();
+    air_boundary_constraints.linkSystemLibrary("dw");
+    air_boundary_constraints.linkSystemLibrary("glog");
+    air_boundary_constraints.linkSystemLibrary("gflags");
     air_boundary_constraints.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/boundary_constraints/boundary_periodic_column_test.cc",
     }, .flags = &.{
@@ -738,10 +720,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const air_fibonacci = b.addStaticLibrary(.{
@@ -753,6 +731,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(air_fibonacci);
     gtest.linkLibrary(air_fibonacci);
     air_fibonacci.linkLibCpp();
+    air_fibonacci.linkSystemLibrary("dw");
+    air_fibonacci.linkSystemLibrary("glog");
+    air_fibonacci.linkSystemLibrary("gflags");
     air_fibonacci.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/fibonacci/fibonacci_air_test.cc",
     }, .flags = &.{
@@ -768,10 +749,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const components_perm_range_check = b.addStaticLibrary(.{
@@ -783,6 +760,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(components_perm_range_check);
     gtest.linkLibrary(components_perm_range_check);
     components_perm_range_check.linkLibCpp();
+    components_perm_range_check.linkSystemLibrary("dw");
+    components_perm_range_check.linkSystemLibrary("glog");
+    components_perm_range_check.linkSystemLibrary("gflags");
     components_perm_range_check.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/components/perm_range_check/range_check_cell_test.cc",
     }, .flags = &.{
@@ -798,10 +778,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const components_diluted_check = b.addStaticLibrary(.{
@@ -813,6 +789,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(components_diluted_check);
     gtest.linkLibrary(components_diluted_check);
     components_diluted_check.linkLibCpp();
+    components_diluted_check.linkSystemLibrary("dw");
+    components_diluted_check.linkSystemLibrary("glog");
+    components_diluted_check.linkSystemLibrary("gflags");
     components_diluted_check.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/components/diluted_check/diluted_check_cell_test.cc",
         "src/starkware/air/components/diluted_check/diluted_check_test.cc",
@@ -829,10 +808,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const components_memory = b.addStaticLibrary(.{
@@ -844,6 +819,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(components_memory);
     gtest.linkLibrary(components_memory);
     components_memory.linkLibCpp();
+    components_memory.linkSystemLibrary("dw");
+    components_memory.linkSystemLibrary("glog");
+    components_memory.linkSystemLibrary("gflags");
     components_memory.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/components/memory/memory_cell_test.cc",
     }, .flags = &.{
@@ -859,10 +837,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const components_permutation = b.addStaticLibrary(.{
@@ -874,6 +848,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(components_permutation);
     gtest.linkLibrary(components_permutation);
     components_permutation.linkLibCpp();
+    components_permutation.linkSystemLibrary("dw");
+    components_permutation.linkSystemLibrary("glog");
+    components_permutation.linkSystemLibrary("gflags");
     components_permutation.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/components/permutation/permutation_dummy_air_test.cc",
     }, .flags = &.{
@@ -889,10 +866,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const air_components = b.addStaticLibrary(.{
@@ -904,6 +877,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(air_components);
     gtest.linkLibrary(air_components);
     air_components.linkLibCpp();
+    air_components.linkSystemLibrary("dw");
+    air_components.linkSystemLibrary("glog");
+    air_components.linkSystemLibrary("gflags");
     air_components.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/components/trace_generation_context_test.cc",
         "src/starkware/air/components/trace_generation_context.cc",
@@ -920,10 +896,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     air_components.linkLibrary(components_diluted_check);
@@ -940,6 +912,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(air_degree_three_example);
     gtest.linkLibrary(air_degree_three_example);
     air_degree_three_example.linkLibCpp();
+    air_degree_three_example.linkSystemLibrary("dw");
+    air_degree_three_example.linkSystemLibrary("glog");
+    air_degree_three_example.linkSystemLibrary("gflags");
     air_degree_three_example.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/degree_three_example/degree_three_example_air_test.cc",
     }, .flags = &.{
@@ -955,10 +930,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const air_boundary = b.addStaticLibrary(.{
@@ -970,6 +941,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(air_boundary);
     gtest.linkLibrary(air_boundary);
     air_boundary.linkLibCpp();
+    air_boundary.linkSystemLibrary("dw");
+    air_boundary.linkSystemLibrary("glog");
+    air_boundary.linkSystemLibrary("gflags");
     air_boundary.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/boundary/boundary_air_test.cc",
     }, .flags = &.{
@@ -985,10 +959,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const cpu_board = b.addStaticLibrary(.{
@@ -1000,6 +970,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(cpu_board);
     gtest.linkLibrary(cpu_board);
     cpu_board.linkLibCpp();
+    cpu_board.linkSystemLibrary("dw");
+    cpu_board.linkSystemLibrary("glog");
+    cpu_board.linkSystemLibrary("gflags");
     cpu_board.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/cpu/board/cpu_air_test.cc",
     }, .flags = &.{
@@ -1015,10 +988,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_air = b.addStaticLibrary(.{
@@ -1030,6 +999,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_air);
     gtest.linkLibrary(starkware_air);
     starkware_air.linkLibCpp();
+    starkware_air.linkSystemLibrary("dw");
+    starkware_air.linkSystemLibrary("glog");
+    starkware_air.linkSystemLibrary("gflags");
     starkware_air.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/air/trace_test.cc",
         "src/starkware/air/test_utils_test.cc",
@@ -1048,10 +1020,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     starkware_air.linkLibrary(air_boundary);
@@ -1070,6 +1038,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(vm_cpp);
     gtest.linkLibrary(vm_cpp);
     vm_cpp.linkLibCpp();
+    vm_cpp.linkSystemLibrary("dw");
+    vm_cpp.linkSystemLibrary("glog");
+    vm_cpp.linkSystemLibrary("gflags");
     vm_cpp.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/cairo/lang/vm/cpp/decoder_test.cc",
         "src/starkware/cairo/lang/vm/cpp/trace_utils_test.cc",
@@ -1087,10 +1058,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_utils = b.addStaticLibrary(.{
@@ -1102,6 +1069,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_utils);
     gtest.linkLibrary(starkware_utils);
     starkware_utils.linkLibCpp();
+    starkware_utils.linkSystemLibrary("dw");
+    starkware_utils.linkSystemLibrary("glog");
+    starkware_utils.linkSystemLibrary("gflags");
     starkware_utils.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/utils/stats_test.cc",
         "src/starkware/utils/profiling_test.cc",
@@ -1132,10 +1102,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const statement_fibonacci = b.addStaticLibrary(.{
@@ -1147,6 +1113,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(statement_fibonacci);
     gtest.linkLibrary(statement_fibonacci);
     statement_fibonacci.linkLibCpp();
+    statement_fibonacci.linkSystemLibrary("dw");
+    statement_fibonacci.linkSystemLibrary("glog");
+    statement_fibonacci.linkSystemLibrary("gflags");
     statement_fibonacci.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/statement/fibonacci/fibonacci_statement_test.cc",
     }, .flags = &.{
@@ -1162,10 +1131,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const statement_cpu = b.addStaticLibrary(.{
@@ -1177,6 +1142,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(statement_cpu);
     gtest.linkLibrary(statement_cpu);
     statement_cpu.linkLibCpp();
+    statement_cpu.linkSystemLibrary("dw");
+    statement_cpu.linkSystemLibrary("glog");
+    statement_cpu.linkSystemLibrary("gflags");
     statement_cpu.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/statement/cpu/cpu_air_statement.cc",
     }, .flags = &.{
@@ -1192,10 +1160,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_statement = b.addStaticLibrary(.{
@@ -1218,6 +1182,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_stl_utils);
     gtest.linkLibrary(starkware_stl_utils);
     starkware_stl_utils.linkLibCpp();
+    starkware_stl_utils.linkSystemLibrary("dw");
+    starkware_stl_utils.linkSystemLibrary("glog");
+    starkware_stl_utils.linkSystemLibrary("gflags");
     starkware_stl_utils.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/stl_utils/containers_test.cc",
         "src/starkware/stl_utils/string_test.cc",
@@ -1234,10 +1201,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_randomness = b.addStaticLibrary(.{
@@ -1249,6 +1212,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_randomness);
     gtest.linkLibrary(starkware_randomness);
     starkware_randomness.linkLibCpp();
+    starkware_randomness.linkSystemLibrary("dw");
+    starkware_randomness.linkSystemLibrary("glog");
+    starkware_randomness.linkSystemLibrary("gflags");
     starkware_randomness.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/randomness/prng_test.cc",
         "src/starkware/randomness/hash_chain_test.cc",
@@ -1267,10 +1233,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_fft_utils = b.addStaticLibrary(.{
@@ -1282,6 +1244,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_fft_utils);
     gtest.linkLibrary(starkware_fft_utils);
     starkware_fft_utils.linkLibCpp();
+    starkware_fft_utils.linkSystemLibrary("dw");
+    starkware_fft_utils.linkSystemLibrary("glog");
+    starkware_fft_utils.linkSystemLibrary("gflags");
     starkware_fft_utils.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/fft_utils/fft_domain_test.cc",
         "src/starkware/fft_utils/fft_bases_test.cc",
@@ -1298,10 +1263,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_fri = b.addStaticLibrary(.{
@@ -1313,6 +1274,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_fri);
     gtest.linkLibrary(starkware_fri);
     starkware_fri.linkLibCpp();
+    starkware_fri.linkSystemLibrary("dw");
+    starkware_fri.linkSystemLibrary("glog");
+    starkware_fri.linkSystemLibrary("gflags");
     starkware_fri.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/fri/fri_test.cc",
         "src/starkware/fri/fri_details_test.cc",
@@ -1341,10 +1305,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const starkware_composition_polynomial = b.addStaticLibrary(.{
@@ -1356,6 +1316,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(starkware_composition_polynomial);
     gtest.linkLibrary(starkware_composition_polynomial);
     starkware_composition_polynomial.linkLibCpp();
+    starkware_composition_polynomial.linkSystemLibrary("dw");
+    starkware_composition_polynomial.linkSystemLibrary("glog");
+    starkware_composition_polynomial.linkSystemLibrary("gflags");
     starkware_composition_polynomial.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/starkware/composition_polynomial/periodic_column_test.cc",
         "src/starkware/composition_polynomial/multiplicative_neighbors_test.cc",
@@ -1375,10 +1338,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const src_starkware = b.addStaticLibrary(.{
@@ -1417,6 +1376,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(XKCP_KeccakP_1600_OptimizedAVX2);
     gtest.linkLibrary(XKCP_KeccakP_1600_OptimizedAVX2);
     XKCP_KeccakP_1600_OptimizedAVX2.linkLibC();
+    XKCP_KeccakP_1600_OptimizedAVX2.linkSystemLibrary("dw");
+    XKCP_KeccakP_1600_OptimizedAVX2.linkSystemLibrary("glog");
+    XKCP_KeccakP_1600_OptimizedAVX2.linkSystemLibrary("gflags");
     XKCP_KeccakP_1600_OptimizedAVX2.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/third_party/XKCP/KeccakP-1600-OptimizedAVX2/KeccakP-1600-AVX2.s",
     }, .flags = &.{
@@ -1431,10 +1393,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const XKCP_CompactFIPS202 = b.addStaticLibrary(.{
@@ -1446,6 +1404,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(XKCP_CompactFIPS202);
     gtest.linkLibrary(XKCP_CompactFIPS202);
     XKCP_CompactFIPS202.linkLibC();
+    XKCP_CompactFIPS202.linkSystemLibrary("dw");
+    XKCP_CompactFIPS202.linkSystemLibrary("glog");
+    XKCP_CompactFIPS202.linkSystemLibrary("gflags");
     XKCP_CompactFIPS202.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/third_party/XKCP/CompactFIPS202/Keccak-readable-and-compact.c",
     }, .flags = &.{
@@ -1460,10 +1421,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const third_party_XKCP = b.addStaticLibrary(.{
@@ -1486,6 +1443,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(third_party_jsoncpp);
     gtest.linkLibrary(third_party_jsoncpp);
     third_party_jsoncpp.linkLibCpp();
+    third_party_jsoncpp.linkSystemLibrary("dw");
+    third_party_jsoncpp.linkSystemLibrary("glog");
+    third_party_jsoncpp.linkSystemLibrary("gflags");
     third_party_jsoncpp.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/third_party/jsoncpp/jsoncpp.cpp",
     }, .flags = &.{
@@ -1501,10 +1461,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const third_party_blake2 = b.addStaticLibrary(.{
@@ -1516,6 +1472,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(third_party_blake2);
     gtest.linkLibrary(third_party_blake2);
     third_party_blake2.linkLibC();
+    third_party_blake2.linkSystemLibrary("dw");
+    third_party_blake2.linkSystemLibrary("glog");
+    third_party_blake2.linkSystemLibrary("gflags");
     third_party_blake2.addCSourceFiles(.{ .files = &[_][]const u8{
         "src/third_party/blake2/blake2s.c",
     }, .flags = &.{
@@ -1530,10 +1489,6 @@ pub fn build(b: *std.build.Builder) void {
         "-I/tmp/googletest/googletest/include",
         "-I/tmp/googletest/googlemock/include",
         "-fconstexpr-steps=20000000",
-        "-l/tmp/glog/libglog.a",
-        "-l/tmp/glflags/lib/libgflags.a",
-        "-l/tmp/googletest/googlemock/libgmock.a",
-        "-l/tmp/googletest/googlemock/gtest/libgtest.a",
     } });
 
     const src_third_party = b.addStaticLibrary(.{
@@ -1545,6 +1500,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(src_third_party);
     gtest.linkLibrary(src_third_party);
     src_third_party.linkLibC();
+    src_third_party.linkSystemLibrary("dw");
+    src_third_party.linkSystemLibrary("glog");
+    src_third_party.linkSystemLibrary("gflags");
     src_third_party.linkLibrary(third_party_jsoncpp);
     src_third_party.linkLibrary(third_party_blake2);
     src_third_party.linkLibrary(third_party_XKCP);
@@ -1558,6 +1516,9 @@ pub fn build(b: *std.build.Builder) void {
     cpu_air_verifier.linkLibrary(stone_prover_src);
     gtest.linkLibrary(stone_prover_src);
     stone_prover_src.linkLibC();
+    stone_prover_src.linkSystemLibrary("dw");
+    stone_prover_src.linkSystemLibrary("glog");
+    stone_prover_src.linkSystemLibrary("gflags");
     stone_prover_src.linkLibrary(src_starkware);
     stone_prover_src.linkLibrary(src_third_party);
 
