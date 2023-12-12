@@ -290,28 +290,24 @@ def main():
     with open(output_file_path, "r") as output_file:
         output_content = output_file.read()
 
-    # Read build.zig content
-    with open(build_zig_path, "r") as build_zig:
-        build_content = build_zig.read()
-
-    updated_build_content = (
-        build_setup
-        + "\n\n"
-        + prover_exec
-        + "\n\n"
-        + verifier_exec
-        + "\n\n"
-        + gtest_exec
-        + "\n\n"
-        + output_content.strip()
-        + "\n\n"
-        + install_exe
-        + "\n\n"
-    )
-
     # Write updated content to build.zig
     with open(build_zig_path, "w") as build_zig:
-        build_zig.write(updated_build_content)
+        build_zig.write(
+            (
+                build_setup
+                + "\n\n"
+                + prover_exec
+                + "\n\n"
+                + verifier_exec
+                + "\n\n"
+                + gtest_exec
+                + "\n\n"
+                + output_content.strip()
+                + "\n\n"
+                + install_exe
+                + "\n\n"
+            )
+        )
 
     # Run zig fmt command to format build.zig
     subprocess.run(["zig", "fmt", "build.zig"], check=True)
