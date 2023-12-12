@@ -2,6 +2,7 @@ import os
 import re
 import subprocess
 
+# Compiler flags used during compilation
 flags = """
     "-Wall",
     "-Wextra",
@@ -16,6 +17,7 @@ flags = """
     "-fconstexpr-steps=20000000",
 """
 
+# Initialization of the build process using the std module from an external package
 build_setup = """const std = @import("std");
 
 pub fn build(b: *std.build.Builder) void {
@@ -23,6 +25,7 @@ pub fn build(b: *std.build.Builder) void {
     const optimize = b.standardOptimizeOption(.{});
 """
 
+# Definition of installation artifacts for executables (cpu_air_prover and cpu_air_verifier)
 install_exe = """const install_exe_prover = b.addInstallArtifact(
     cpu_air_prover,
     .{},
@@ -35,6 +38,7 @@ const install_exe_verifier = b.addInstallArtifact(
 );
 b.getInstallStep().dependOn(&install_exe_verifier.step); }"""
 
+# Build configurations for cpu_air_prover executable
 prover_exec = (
     """var cpu_air_prover = b.addExecutable(.{
     .name = "cpu_air_prover",
@@ -58,6 +62,7 @@ cpu_air_prover.linkSystemLibrary("gflags");
 """
 )
 
+# Build configurations for cpu_air_verifier executable
 verifier_exec = (
     """var cpu_air_verifier = b.addExecutable(.{
     .name = "cpu_air_verifier",
@@ -81,6 +86,7 @@ cpu_air_verifier.linkSystemLibrary("gflags");
 """
 )
 
+# Build configurations for gtest executable
 gtest_exec = (
     """var gtest = b.addExecutable(.{
     .name = "gtest",
@@ -278,20 +284,9 @@ def main():
     """
     Main function to generate output.txt and update build.zig.
     """
-    output_file_path = "output.txt"
-    build_zig_path = "build.zig"
-    project_directory = os.getcwd()
 
-    # Generate output.txt
-    with open(output_file_path, "w") as output_file:
-        process_project_directory(project_directory, output_file)
-
-    # Read output.txt content
-    with open(output_file_path, "r") as output_file:
-        output_content = output_file.read()
-
-    # Write updated content to build.zig
-    with open(build_zig_path, "w") as build_zig:
+    # Writing to build.zig in stages
+    with open("build.zig", "w") as build_zig:
         build_zig.write(
             (
                 build_setup
@@ -302,12 +297,10 @@ def main():
                 + "\n\n"
                 + gtest_exec
                 + "\n\n"
-                + output_content.strip()
-                + "\n\n"
-                + install_exe
-                + "\n\n"
             )
         )
+        process_project_directory(os.getcwd(), build_zig)
+        build_zig.write("\n\n" + install_exe + "\n\n")
 
     # Run zig fmt command to format build.zig
     subprocess.run(["zig", "fmt", "build.zig"], check=True)
